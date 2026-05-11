@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>login.feature</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #b3ae60;}
+.s4 { color: #5c92ff;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+login.feature</font>
+</center></td></tr></table>
+<pre><span class="s0">Feature</span><span class="s1">: </span><span class="s2">Login</span>
+  <span class="s2">As a registered user,</span>
+  <span class="s2">I want to login to the application,</span>
+  <span class="s2">So that I can access my account.</span>
+
+  <span class="s0">Background</span><span class="s1">:</span>
+    <span class="s0">Given </span><span class="s2">the user is on the Home page</span>
+    <span class="s0">When </span><span class="s2">the user clicks the Signup/Login button</span>
+
+  <span class="s3">@Happy</span>
+  <span class="s0">Scenario</span><span class="s1">: </span><span class="s2">User login with valid credentials</span>
+
+    <span class="s0">And </span><span class="s2">the user enters a valid email address &quot;testuser1@outlook.com&quot;</span>
+    <span class="s0">And </span><span class="s2">the user enters a valid password &quot;Test@123&quot;</span>
+    <span class="s0">And </span><span class="s2">the user clicks the Login button</span>
+    <span class="s0">Then </span><span class="s2">the user should be logged in successfully</span>
+
+  <span class="s3">@Sad</span>
+  <span class="s0">Scenario Outline</span><span class="s1">: </span><span class="s2">User login with invalid passwords</span>
+
+    <span class="s0">And </span><span class="s2">the user enters a valid email address &quot;testuser1@outlook.com&quot;</span>
+    <span class="s0">And </span><span class="s2">the user enters an invalid password &quot;</span><span class="s1">&lt;password&gt;</span><span class="s2">&quot;</span>
+    <span class="s0">And </span><span class="s2">the user clicks the Login button</span>
+    <span class="s0">Then </span><span class="s2">the user should see a login error message &quot;Your email or password is incorrect!&quot;</span>
+
+    <span class="s0">Examples</span><span class="s1">:</span>
+      <span class="s0">| </span><span class="s4">password </span><span class="s0">|</span>
+      <span class="s0">| </span><span class="s4">flower   </span><span class="s0">|</span>
+      <span class="s0">| </span><span class="s4">12345    </span><span class="s0">|</span>
+      <span class="s0">| </span><span class="s4">Test123  </span><span class="s0">|</span>
+</pre>
+</body>
+</html>
