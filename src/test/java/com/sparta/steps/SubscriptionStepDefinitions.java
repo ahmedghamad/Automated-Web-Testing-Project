@@ -1,4 +1,5 @@
 package com.sparta.steps;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.*;
 import net.thucydides.core.annotations.Steps;
 
@@ -31,13 +32,14 @@ public class SubscriptionStepDefinitions {
     public void verify_message(String msg) {
         steps.verify_success_message(msg);
     }
-//Sad path: Empty email field
+
+// Sad path: Empty email field
+
     @Given("the subscription form is visible")
     public void form_visible(){
         steps.open_homepage();
         steps.scroll_to_footer();
     }
-
 
     @When("the visitor leaves the email field empty")
     public void email_field_empty(){
@@ -58,5 +60,45 @@ public class SubscriptionStepDefinitions {
     public void validation_message_displays(){
         steps.verify_error_message_displayed();
     }
+
+
+  // Sad path: Invalid email
+
+    @Given("the visitor is on the website")
+    public void theVisitorIsOnTheWebsite() {
+        steps.open_homepage();
+        steps.scroll_to_footer();
+    }
+
+    @When("the visitor enters invalid email {string}")
+    public void theVisitorEntersInvalidEmail(String email) {
+        steps.enter_email(email);
+    }
+
+    @Then("the subscription is not submitted")
+    public void theSubscriptionIsNotSubmitted() {
+        steps.verify_subscription_not_submitted();
+    }
+
+    @And("an error message is displayed")
+    public void anErrorMessageIsDisplayed() {
+        steps.verify_error_message_displayed();
+    }
+
+    // Sad path: Already registered email
+
+    @Given("a user has already subscribed with email {string}")
+    public void aUserHasAlreadySubscribedWithEmail(String email) {
+        steps.enter_email(email);
+        steps.click_subscribe_button();
+    }
+
+    @When("the user subscribes again with email {string}")
+    public void theUserSubscribesAgainWithEmail(String email) {
+
+        steps.enter_email(email);
+        steps.click_subscribe_button();
+    }
+
 
 }

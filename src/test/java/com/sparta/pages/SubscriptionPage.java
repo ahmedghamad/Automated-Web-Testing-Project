@@ -33,7 +33,7 @@ public class SubscriptionPage extends PageObject {
 //Selenium click might fail because of overlays => use Js to click
     public void acceptCookiesIfPresent() {
         try {
-            if (consentButton.isVisible()) {
+            if (consentButton.isCurrentlyVisible()) {
                 evaluateJavascript("arguments[0].click();", consentButton);
             }
         } catch (Exception e) {
@@ -42,25 +42,24 @@ public class SubscriptionPage extends PageObject {
     }
 
     public void scrollToFooter() {
-        evaluateJavascript("arguments[0].scrollIntoView(true);", emailInput);
-        emailInput.waitUntilVisible();
         acceptCookiesIfPresent();
+        evaluateJavascript("arguments[0].scrollIntoView(true);", emailInput);
     }
 
     public void enterEmail(String email) {
-        emailInput.waitUntilVisible();
+        emailInput.waitUntilClickable();
         emailInput.clear();
         emailInput.type(email);
     }
 //sad path empty email
     public void leaveEmailFieldEmpty(){
-        emailInput.waitUntilVisible();
+        emailInput.waitUntilClickable();
         emailInput.clear();
     }
 
     public void clickSubscribe() {
         acceptCookiesIfPresent();
-        subscribeBtn.waitUntilVisible().click();
+        subscribeBtn.waitUntilClickable().click();
     }
 
     public String getSuccessMessage() {
