@@ -31,4 +31,32 @@ public class SubscriptionStepDefinitions {
     public void verify_message(String msg) {
         steps.verify_success_message(msg);
     }
+//Sad path: Empty email field
+    @Given("the subscription form is visible")
+    public void form_visible(){
+        steps.open_homepage();
+        steps.scroll_to_footer();
+    }
+
+
+    @When("the visitor leaves the email field empty")
+    public void email_field_empty(){
+        steps.empty_email_validation();
+    }
+
+    @And("clicks the Subscribe button")
+    public void user_click_subscribe_button(){
+        steps.click_subscribe_button();
+    };
+
+    @Then("the form submission is prevented")
+    public void form_not_submitted(){
+        steps.verify_subscription_not_submitted();
+    }
+
+    @And("a required field validation message is displayed")
+    public void validation_message_displays(){
+        steps.verify_error_message_displayed();
+    }
+
 }

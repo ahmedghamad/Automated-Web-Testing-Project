@@ -5,25 +5,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 public class SubscriptionPage extends PageObject {
+//waitUntilVisible -> prevent timing problems like pop up
 
     public SubscriptionPage(WebDriver driver) {
         super(driver);
     }
-
+//close cookies pop up
     @FindBy(xpath = "//button[contains(@class,'fc-cta-consent') or @aria-label='Consent']")
     private WebElementFacade consentButton;
 
-    public void acceptCookiesIfPresent() {
-        try {
-            if (consentButton.waitUntilVisible().isPresent()) {
-                consentButton.click();
-            }
-        } catch (Exception e) {
-            // ignore if not present
-        }
-    }
-
-    @FindBy(id = "susbscribe_email")
+    @FindBy(id = "susbscribe_email")//wrong spelling used by the website
     private WebElementFacade emailInput;
 
     @FindBy(id = "subscribe")
@@ -32,24 +23,58 @@ public class SubscriptionPage extends PageObject {
     @FindBy(xpath = "//div[@class='alert-success alert']")
     private WebElementFacade successMsg;
 
+//open website, handle cookie immediately
     public void openHomePage() {
         openUrl("https://automationexercise.com");
+        acceptCookiesIfPresent();
+    }
+
+//handle cookie pop up problem
+//Selenium click might fail because of overlays => use Js to click
+    public void acceptCookiesIfPresent() {
+        try {
+            if (consentButton.isVisible()) {
+                evaluateJavascript("arguments[0].click();", consentButton);
+            }
+        } catch (Exception e) {
+            // ignore if not present
+        }
     }
 
     public void scrollToFooter() {
-        evaluateJavascript("window.scrollTo(0, document.body.scrollHeight)");
+        evaluateJavascript("arguments[0].scrollIntoView(true);", emailInput);
+        emailInput.waitUntilVisible();
         acceptCookiesIfPresent();
     }
 
     public void enterEmail(String email) {
-        emailInput.waitUntilVisible().type(email);
+        emailInput.waitUntilVisible();
+        emailInput.clear();
+        emailInput.type(email);
+    }
+//sad path empty email
+    public void leaveEmailFieldEmpty(){
+        emailInput.waitUntilVisible();
+        emailInput.clear();
     }
 
     public void clickSubscribe() {
-        subscribeBtn.click();
+        acceptCookiesIfPresent();
+        subscribeBtn.waitUntilVisible().click();
     }
 
     public String getSuccessMessage() {
         return successMsg.waitUntilVisible().getText();
     }
+
+//return true if validation exist
+    public boolean isValidationEmailDisplayed(){
+        String message = emailInput.getAttribute("validationMessage");
+        return message != null && !message.trim().isEmpty();
+    }
+//verify user still stay on page
+    public boolean isStillOnPage(){
+        return getDriver().getCurrentUrl().contains("automationexercise.com");
+    }
+
 }
