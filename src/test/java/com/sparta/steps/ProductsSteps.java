@@ -1,4 +1,4 @@
 package com.sparta.steps;
 
-public class ProductSteps {
+public class ProductsSteps {
 }

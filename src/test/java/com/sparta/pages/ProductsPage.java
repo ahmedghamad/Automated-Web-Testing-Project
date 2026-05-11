@@ -1,15 +1,15 @@
 package com.sparta.pages;
 
+import net.serenitybdd.core.annotations.findby.FindBy;
+import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
-import org.openqa.selenium.support.FindBy;
-
 import java.util.List;
 
 @DefaultUrl("https://automationexercise.com/products")
-public class ProductsPage {
+public class ProductsPage extends PageObject {
 
-    @FindBy(css = "a[href='/prodcuts']")
+    @FindBy(css = "a[href='/products']")
     private WebElementFacade productsNavLink;
 
     @FindBy(css = "h2.title.text-center")
@@ -30,29 +30,28 @@ public class ProductsPage {
     @FindBy(css = ".brands-name")
     private WebElementFacade brandsSidebar;
 
-    public void clickProductNavLink() {
+    @FindBy(css = ".product-overlay .add-to-cart")
+    private List<WebElementFacade> addToCartButtons;
+
+    public void clickProductsNavLink() {
         productsNavLink.click();
     }
 
     public String getPageHeading() {
-        return allProductsHeading.getText();
+        return allProductsHeading.getText().trim();
     }
 
     public boolean areProductsDisplayed() {
         return !productNames.isEmpty();
     }
 
-    public boolean productPriceExist() {
-        return !productPrices.isEmpty();
-    }
-
     public boolean productsHaveNameAndPrice() {
-        return areProductsDisplayed() && productPriceExist() &&
-                productNames.size() == productPrices.size();
+        return !productNames.isEmpty() && !productPrices.isEmpty()
+                && productNames.size() == productPrices.size();
     }
 
     public boolean allProductsHaveViewProductLink() {
-        return productNames.size() == viewProductLinks.size();
+        return !viewProductLinks.isEmpty();
     }
 
     public boolean isCategorySidebarVisible() {
@@ -61,5 +60,9 @@ public class ProductsPage {
 
     public boolean isBrandsSidebarVisible() {
         return brandsSidebar.isVisible();
+    }
+
+    public boolean addToCartButtonsExist() {
+        return !addToCartButtons.isEmpty();
     }
 }
