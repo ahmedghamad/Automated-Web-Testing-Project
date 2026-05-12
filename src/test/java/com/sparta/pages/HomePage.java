@@ -81,6 +81,9 @@ public class HomePage extends PageObject {
     @FindBy (css = "#Women > div > ul > li:nth-child(3)")
     private WebElementFacade sareeCategory;
 
+    @FindBy(css = ".col-sm-4:nth-child(3) .choose a")
+    private  WebElementFacade firstDress;
+
 
     //men
     @FindBy(css = "#accordian > div:nth-child(2)")
@@ -126,6 +129,20 @@ public class HomePage extends PageObject {
 
     public void  clickDress(){
         dressCategory.click();
+
+    }
+
+    public void viewProduct(){
+        evaluateJavascript("arguments[0].scrollIntoView(true);", womenCategory);
+        evaluateJavascript("arguments[0].click();", womenCategory);
+
+        evaluateJavascript("arguments[0].scrollIntoView(true);", dressCategory);
+        evaluateJavascript("arguments[0].click();", dressCategory);
+
+        evaluateJavascript("arguments[0].scrollIntoView(true);", firstDress);
+        evaluateJavascript("arguments[0].click();", firstDress);
+
+
     }
 
     public void clickTops(){
@@ -225,6 +242,8 @@ public class HomePage extends PageObject {
             });
         } catch (Exception ignored) {}
 
+
+
         // DISMISS CONSENT POPUP
         try {
             WebElementFacade popup = find(By.cssSelector(".fc-consent-root"));
@@ -239,6 +258,16 @@ public class HomePage extends PageObject {
         } catch (Exception ignored) {}
     }
 
+    // Remove google vignette overlay
+    public void dissmissGoogleVignette(){
+
+        try {
+            WebElementFacade vignette = find(By.cssSelector("#google_vignette"));
+            if (vignette.isPresent()) {
+                evaluateJavascript("document.querySelector('#google_vignette').remove();");
+            }
+        } catch (Exception ignored) {}
+    }
 
         public void clickSignupLoginButton() {
         signupLoginButton.click();

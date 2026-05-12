@@ -15,6 +15,7 @@ public class ProductsSteps {
     @Managed
     HomePage homePage;
 
+
     @Managed
     ProductsPage productsPage;
 
@@ -22,6 +23,7 @@ public class ProductsSteps {
     public void iAmOnTheHomepage() {
         homePage.open();
         homePage.acceptConsentIfVisible();
+        homePage.dismissPopups();
     }
 
     @And("I click {string} in the navbar")

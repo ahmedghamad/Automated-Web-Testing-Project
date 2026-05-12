@@ -93,9 +93,9 @@ public class ProductsPage extends PageObject {
     private List<WebElementFacade> cartRows;
 
     public void acceptConsentIfVisible() {
-            if (consentButton.isVisible()) {
-                consentButton.click();
-            }
+        if (consentButton.isVisible()) {
+            consentButton.click();
+        }
     }
 
     public void clickProductsNavLink() {
@@ -137,8 +137,7 @@ public class ProductsPage extends PageObject {
 
     public void clickSearch() {
         evaluateJavascript("arguments[0].scrollIntoView(true);", submitSearch);
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("arguments[0].click();", submitSearch);
+        evaluateJavascript("arguments[0].click();", submitSearch);
     }
 
     public boolean areSearchResultsDisplayed() {
