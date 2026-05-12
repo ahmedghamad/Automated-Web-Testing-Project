@@ -9,7 +9,6 @@ Feature: Cart Functionality
     And the user clicks the View Cart button
     Then the product should be displayed in the cart
 
-
   @Happy
   Scenario: User views the shopping cart successfully
 

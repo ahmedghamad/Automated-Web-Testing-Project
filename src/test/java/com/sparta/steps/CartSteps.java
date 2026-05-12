@@ -5,14 +5,20 @@ import com.sparta.pages.HomePage;
 import com.sparta.pages.ProductsPage;
 
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import net.thucydides.core.annotations.Managed;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.openqa.selenium.WebDriver;
 
 public class CartSteps {
 
     HomePage homePage;
+
     ProductsPage productsPage;
+
     CartPage cartPage;
 
     @And("the user navigates to the products page")
@@ -20,32 +26,24 @@ public class CartSteps {
 
         productsPage.open();
     }
-
     @And("the user adds a product to the cart")
     public void theUserAddsAProductToTheCart() {
-
-        productsPage.clickAddToCartButton();
+        productsPage.clickFirstAddToCartButton();
     }
 
     @And("the user clicks the View Cart button")
     public void theUserClicksTheViewCartButton() {
 
-        productsPage.clickViewCartButton();
+        cartPage.clickViewCartButton();
     }
 
-    @Then("the product should be displayed in the cart")
+    @And("the product should be displayed in the cart")
     public void theProductShouldBeDisplayedInTheCart() {
 
         MatcherAssert.assertThat(
                 cartPage.isProductDisplayedInCart(),
                 Matchers.is(true)
         );
-    }
-
-    @And("the user clicks the Cart button")
-    public void theUserClicksTheCartButton() {
-
-        homePage.clickCartButton();
     }
 
     @Then("the shopping cart page should be displayed")
@@ -81,4 +79,13 @@ public class CartSteps {
         );
     }
 
+    @Given("the user is on the homepage")
+    public void theUserIsOnTheHomepage() {
+        homePage.open();
+    }
+
+    @When("the user clicks the Cart button")
+    public void theUserClicksTheCartButton() {
+        cartPage.clickViewCartButton();
+    }
 }
