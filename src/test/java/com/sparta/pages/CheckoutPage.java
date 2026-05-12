@@ -41,7 +41,8 @@ public class CheckoutPage extends PageObject {
     @FindBy(xpath = "//h2[contains(text(),'Review Your Order')]")
     private WebElementFacade orderReviewSection;
 
-    @FindBy(xpath = "//p[contains(text(),'Congratulations')]")
+    @FindBy (css=".check_out")
+
     private WebElementFacade invoiceDownloadedMessage;
 
     @FindBy(xpath = "//u[contains(text(),'Register / Login')]")

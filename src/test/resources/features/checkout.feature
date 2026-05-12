@@ -5,11 +5,10 @@ Feature: Checkout Functionality
 
     Given the user is logged into the application
     And the user has added a product to the cart
-    And the user proceeds to checkout
-    When the user enters an order comment "Please deliver quickly"
+    When the user proceeds to checkout
     And the user clicks the Place Order button
     And the user enters valid payment details
-    Then the order should be placed successfully
+    Then the order page should display a confirmation message
 
 
   @Happy

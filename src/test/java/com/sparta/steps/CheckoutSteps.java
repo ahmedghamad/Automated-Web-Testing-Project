@@ -1,9 +1,6 @@
 package com.sparta.steps;
 
-import com.sparta.pages.CheckoutPage;
-import com.sparta.pages.HomePage;
-import com.sparta.pages.LoginPage;
-import com.sparta.pages.RegistrationPage;
+import com.sparta.pages.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,9 +11,11 @@ import org.hamcrest.Matchers;
 public class CheckoutSteps {
 
     CheckoutPage checkoutPage;
-    LoginPage loginPage;
+    ProductsPage productsPage;
     HomePage homePage;
     RegistrationPage registrationPage;
+
+    CartPage cartPage;
 
 
     @Given("the user is logged into the application")
@@ -27,20 +26,16 @@ public class CheckoutSteps {
     @And("the user has added a product to the cart")
     public void theUserHasAddedAProductToTheCart() {
 
+
     }
 
-    @And("the user proceeds to checkout")
+    @When("the user proceeds to checkout")
     public void theUserProceedsToCheckout() {
         homePage.open();
         homePage.acceptConsentIfVisible();
         homePage.dismissPopups();
         MatcherAssert.assertThat(homePage.getDriver().getCurrentUrl(), Matchers.is("https://automationexercise.com/checkout"));
 
-    }
-
-    @When("the user enters an order comment {string}")
-    public void theUserEntersAnOrderComment(String comment) {
-        checkoutPage.enterComment(comment);
     }
 
     @And("the user clicks the Place Order button")
@@ -63,7 +58,7 @@ public class CheckoutSteps {
         checkoutPage.clickPayAndConfirmButton();
     }
 
-    @Then("the order should be placed successfully")
+    @Then("the order page should display a confirmation message")
     public void theOrderShouldBePlacedSuccessfully() {
         MatcherAssert.assertThat(
                 checkoutPage.isOrderSuccessMessageDisplayed(),
@@ -106,6 +101,7 @@ public class CheckoutSteps {
 
     @Given("the user has added multiple products to the cart")
     public void theUserHasAddedMultipleProductsToTheCart() {
+
     }
 
     @Then("the order review section should display all products")
@@ -118,10 +114,13 @@ public class CheckoutSteps {
 
     @Given("the user has an empty cart")
     public void theUserHasAnEmptyCart() {
+        cartPage.open();
     }
 
     @When("the user navigates to the checkout page")
     public void theUserNavigatesToTheCheckoutPage() {
+        checkoutPage.open();
+
     }
 
     @Then("the checkout page should not allow order placement")
@@ -171,4 +170,6 @@ public class CheckoutSteps {
     @Then("the cart products should still be displayed")
     public void theCartProductsShouldStillBeDisplayed() {
     }
+
+
 }
