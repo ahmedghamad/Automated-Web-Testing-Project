@@ -4,6 +4,7 @@ import com.sparta.pages.AccountCreatedPage;
 import com.sparta.pages.HomePage;
 import com.sparta.pages.LoginPage;
 import com.sparta.pages.RegistrationPage;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -105,4 +106,9 @@ public class RegistrationSteps {
     }
 
 
+    @Then("user should see success message {string}")
+    public void userShouldSeeSuccessMessage(String arg0) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
