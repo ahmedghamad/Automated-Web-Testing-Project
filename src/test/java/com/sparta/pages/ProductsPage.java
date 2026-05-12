@@ -33,6 +33,25 @@ public class ProductsPage extends PageObject {
     @FindBy(css = ".product-overlay .add-to-cart")
     private List<WebElementFacade> addToCartButtons;
 
+    @FindBy(name = "search")
+    private WebElementFacade searchBar;
+
+    @FindBy(id = "submit_search")
+    private WebElementFacade submitSearch;
+
+    @FindBy(css = "button.fc-cta-consent")
+    private WebElementFacade consentButton;
+
+    @FindBy(css = ".features_items .col-sm-4")
+    private List<WebElementFacade> productCards;
+
+
+    public void acceptConsentIfVisible() {
+            if (consentButton.isVisible()) {
+                consentButton.click();
+            }
+    }
+
     public void clickProductsNavLink() {
         productsNavLink.click();
     }
@@ -64,5 +83,34 @@ public class ProductsPage extends PageObject {
 
     public boolean addToCartButtonsExist() {
         return !addToCartButtons.isEmpty();
+    }
+
+    public void enterSearchItem(String searchItem) {
+        this.searchBar.type(searchItem);
+    }
+
+    public void clickSearch() {
+        waitFor(submitSearch).isClickable();
+        submitSearch.click();
+    }
+
+    public boolean areSearchResultsDisplayed() {
+        return !productNames.isEmpty();
+    }
+
+    public boolean noProductsDisplayed() {
+        return productCards.isEmpty();
+    }
+
+    public boolean isSearchBarVisible() {
+        return searchBar.isVisible();
+    }
+
+    public boolean isPageStable() {
+        return allProductsHeading.isVisible();
+    }
+
+    public void clearSearchBar() {
+        searchBar.clear();
     }
 }
