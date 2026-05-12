@@ -4,8 +4,8 @@ import com.sparta.pages.ContactUsPage;
 import io.cucumber.java.en.*;
 import net.thucydides.core.annotations.ManagedPages;
 import net.thucydides.core.pages.Pages;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class ContactUsSteps {
 

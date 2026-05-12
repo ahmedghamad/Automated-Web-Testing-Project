@@ -5,39 +5,41 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 public class SubscriptionPage extends PageObject {
-     //waitUntilVisible -> prevent timing problems like pop up
 
     public SubscriptionPage(WebDriver driver) {
         super(driver);
     }
-    //close cookies pop up
+
+    @SuppressWarnings("unused")
     @FindBy(xpath = "//button[contains(@class,'fc-cta-consent') or @aria-label='Consent']")
     private WebElementFacade consentButton;
 
-    @FindBy(id = "susbscribe_email")//wrong spelling used by the website
+    // The website intentionally uses the misspelled id "susbscribe_email".
+    @SuppressWarnings("unused")
+    @FindBy(id = "susbscribe_email")
     private WebElementFacade emailInput;
 
+    @SuppressWarnings("unused")
     @FindBy(id = "subscribe")
     private WebElementFacade subscribeBtn;
 
+    @SuppressWarnings("unused")
     @FindBy(xpath = "//div[@class='alert-success alert']")
     private WebElementFacade successMsg;
 
-    //open website, handle cookie immediately
+    //Handle cookie immediately
     public void openHomePage() {
         openUrl("https://automationexercise.com");
         acceptCookiesIfPresent();
     }
 
-    //handle cookie pop up problem
-    //Selenium click might fail because of overlays => use Js to click
     public void acceptCookiesIfPresent() {
         try {
             if (consentButton.isCurrentlyVisible()) {
                 evaluateJavascript("arguments[0].click();", consentButton);
             }
-        } catch (Exception e) {
-            // ignore if not present
+        } catch (Exception ignored) {
+            // Cookie banner is not always displayed.
         }
     }
 
@@ -51,11 +53,8 @@ public class SubscriptionPage extends PageObject {
         emailInput.clear();
         emailInput.type(email);
      }
+
     //sad path empty email
-    public void leaveEmailFieldEmpty(){
-        emailInput.waitUntilClickable();
-        emailInput.clear();
-    }
 
     public void clickSubscribe() {
         acceptCookiesIfPresent();
@@ -71,6 +70,7 @@ public class SubscriptionPage extends PageObject {
         String message = emailInput.getAttribute("validationMessage");
         return message != null && !message.trim().isEmpty();
     }
+    
     //verify user still stay on page
     public boolean isStillOnPage(){
         return getDriver().getCurrentUrl().contains("automationexercise.com");
