@@ -1,63 +1,107 @@
 package com.sparta.steps;
 
+import com.sparta.pages.CheckoutPage;
+import com.sparta.pages.HomePage;
 import com.sparta.pages.LoginPage;
+import com.sparta.pages.RegistrationPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 
 public class CheckoutSteps {
 
+    CheckoutPage checkoutPage;
     LoginPage loginPage;
+    HomePage homePage;
+    RegistrationPage registrationPage;
 
 
     @Given("the user is logged into the application")
     public void theUserIsLoggedIntoTheApplication() {
-        LoginPage.
+       MatcherAssert.assertThat(homePage.isLoggedInAsTextDisplayed(), Matchers.is(true));;
     }
 
     @And("the user has added a product to the cart")
     public void theUserHasAddedAProductToTheCart() {
+
     }
 
     @And("the user proceeds to checkout")
     public void theUserProceedsToCheckout() {
+        homePage.open();
+        homePage.acceptConsentIfVisible();
+        homePage.dismissPopups();
+        MatcherAssert.assertThat(homePage.getDriver().getCurrentUrl(), Matchers.is("https://automationexercise.com/checkout"));
+
     }
 
     @When("the user enters an order comment {string}")
-    public void theUserEntersAnOrderComment(String arg0) {
+    public void theUserEntersAnOrderComment(String comment) {
+        checkoutPage.enterComment(comment);
     }
 
     @And("the user clicks the Place Order button")
     public void theUserClicksThePlaceOrderButton() {
+        checkoutPage.clickPlaceOrderButton();
     }
 
     @And("the user enters valid payment details")
     public void theUserEntersValidPaymentDetails() {
+        checkoutPage.enterCardName("Test User");
+
+        checkoutPage.enterCardNumber("4111111111111111");
+
+        checkoutPage.enterCVC("123");
+
+        checkoutPage.enterExpiryMonth("12");
+
+        checkoutPage.enterExpiryYear("2030");
+
+        checkoutPage.clickPayAndConfirmButton();
     }
 
     @Then("the order should be placed successfully")
     public void theOrderShouldBePlacedSuccessfully() {
+        MatcherAssert.assertThat(
+                checkoutPage.isOrderSuccessMessageDisplayed(),
+                Matchers.is(true));
     }
 
     @Then("the delivery address should be displayed correctly")
     public void theDeliveryAddressShouldBeDisplayedCorrectly() {
+
+        MatcherAssert.assertThat(
+                checkoutPage.isDeliveryAddressDisplayed(),
+                Matchers.is(true));
     }
 
     @And("the billing address should be displayed correctly")
     public void theBillingAddressShouldBeDisplayedCorrectly() {
+        MatcherAssert.assertThat(
+                checkoutPage.isBillingAddressDisplayed(),
+                Matchers.is(true));
     }
 
     @Given("the user has successfully placed an order")
-    public void theUserHasSuccessfullyPlacedAnOrder() {
+    public void theUserHasSuccessfullyPlacedAnOrder() {MatcherAssert.assertThat(
+            checkoutPage.isOrderSuccessMessageDisplayed(),
+            Matchers.is(true));
     }
 
     @When("the user clicks the Download Invoice button")
     public void theUserClicksTheDownloadInvoiceButton() {
+        checkoutPage.clickDownloadInvoiceButton();
     }
 
     @Then("the invoice should be downloaded successfully")
     public void theInvoiceShouldBeDownloadedSuccessfully() {
+
+        MatcherAssert.assertThat(
+                checkoutPage.isInvoiceDownloaded(),
+                Matchers.is(true));
     }
 
     @Given("the user has added multiple products to the cart")
