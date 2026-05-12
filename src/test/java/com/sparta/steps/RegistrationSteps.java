@@ -32,6 +32,7 @@ public class RegistrationSteps {
 
         homePage.open();
         homePage.acceptConsentIfVisible();
+        homePage.dismissPopups();
     }
 
     @When("the user clicks the Signup\\/Login button")
