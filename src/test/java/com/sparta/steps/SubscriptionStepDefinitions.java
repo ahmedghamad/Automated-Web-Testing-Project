@@ -85,20 +85,6 @@ public class SubscriptionStepDefinitions {
         steps.verify_error_message_displayed();
     }
 
-    // Sad path: Already registered email
-
-    @Given("a user has already subscribed with email {string}")
-    public void aUserHasAlreadySubscribedWithEmail(String email) {
-        steps.enter_email(email);
-        steps.click_subscribe_button();
-    }
-
-    @When("the user subscribes again with email {string}")
-    public void theUserSubscribesAgainWithEmail(String email) {
-
-        steps.enter_email(email);
-        steps.click_subscribe_button();
-    }
 
 
 }

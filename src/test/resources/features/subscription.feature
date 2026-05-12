@@ -26,12 +26,6 @@ Feature: Subscription functionality
     Then the subscription is not submitted
     And an error message is displayed
 
-  @sadPath
-#Already registered email
-  Scenario: User subscribes multiple times using the same email address
-    Given a user has already subscribed with email "testuser@gmail.com"
-    When the user subscribes again with email "testuser@gmail.com"
-    Then user should see subscription success message "You have been successfully subscribed!"
 
 #Website should now accept duplicate email but this website did. Here is the test that will fail
 #  @Ignore

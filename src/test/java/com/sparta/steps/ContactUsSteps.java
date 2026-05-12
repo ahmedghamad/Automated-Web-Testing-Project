@@ -1,37 +1,88 @@
 package com.sparta.steps;
 
 import com.sparta.pages.ContactUsPage;
-import net.serenitybdd.screenplay.Performable;
-import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actions.Enter;
-import net.serenitybdd.screenplay.actions.Upload;
-import net.thucydides.core.steps.ScenarioSteps;
+import io.cucumber.java.PendingException;
+import io.cucumber.java.en.*;
+import net.thucydides.core.annotations.ManagedPages;
+import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.pages.Pages;
 
-import java.nio.file.Paths;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class ContactUsSteps extends ScenarioSteps {
-//
-   public static Performable withDetails(
-           String name,
-           String email,
-           String subject,
-           String message
-   ){
-       // 0 = actor name
-       return Task.where( "{0} submits the contact form",
-               Enter.theValue(name)
-                       .into(ContactUsPage.NAME),
-               Enter.theValue(email)
-                       .into(ContactUsPage.EMAIL),
-               Enter.theValue(subject)
-                       .into(ContactUsPage.SUBJECT),
-               Enter.theValue(message)
-                       .into(ContactUsPage.MESSAGE),
-               Upload.theFile(
-                       Paths.get("src/test/resources/fileToTestContactUsForm.jpg"))
-                       .to(ContactUsPage.UPLOAD_FILE),
-               Click.on(ContactUsPage.SUBMIT)
-       );
-   }
+public class ContactUsSteps {
+
+    @ManagedPages
+    Pages pages;
+
+    ContactUsPage contactUsPage;
+
+    @Given("user launches the application")
+    public void userLaunchesTheApplication() {
+        contactUsPage = pages.get(ContactUsPage.class);
+        contactUsPage.openHomePage();
+        contactUsPage.acceptCookiesIfVisible();
+    }
+
+    @When("user navigates to Contact Us page")
+    public void userNavigatesToContactUsPage() {
+        contactUsPage.clickContactUs();
+        assertThat(contactUsPage.isContactUsPageDisplayed()).isTrue();
+    }
+
+    @And("user enters name {string}")
+    public void userEntersName(String name) {
+        contactUsPage.enterName(name);
+    }
+
+    @And("user enters 1 email {string}")
+    public void userEntersEmail(String email1) {
+        contactUsPage.enterEmail(email1);
+    }
+
+    @And("user enters subject {string}")
+    public void userEntersSubject(String subject) {
+        contactUsPage.enterSubject(subject);
+    }
+
+    @And("user enters message {string}")
+    public void userEntersMessage(String message) {
+        contactUsPage.enterMessage(message);
+    }
+
+    @And("user uploads file {string}")
+    public void userUploadsFile(String fileName) {
+        contactUsPage.uploadFile(fileName);
+    }
+
+    @And("user clicks submit button")
+    public void userClicksSubmitButton() {
+        contactUsPage.clickSubmit();
+    }
+
+    @Then("success message should be displayed")
+    public void successMessageShouldBeDisplayed() {
+        assertThat(contactUsPage.isSuccessMessageDisplayed()).isTrue();
+        assertThat(contactUsPage.getSuccessMessageText())
+                .contains("Success! Your details have been submitted successfully.");
+    }
+// Sad path
+@And("user clicks submit button without accepting alert")
+public void userClicksSubmitButtonWithoutAcceptingAlert() {
+    contactUsPage.clickSubmitWithoutAcceptingAlert();
+}
+
+    @Then("the form should not be submitted")
+    public void theFormShouldNotBeSubmitted() {
+        assertThat(contactUsPage.isFormNotSubmitted()).isTrue();
+    }
+
+    @And("the user should remain on the Contact Us page")
+    public void theUserShouldRemainOnTheContactUsPage() {
+        assertThat(contactUsPage.isStillOnContactUsPage()).isTrue();
+    }
+
+    @And("an email validation error should be displayed")
+    public void anEmailValidationErrorShouldBeDisplayed() {
+        assertThat(contactUsPage.isEmailValidationErrorDisplayed()).isTrue();
+    }
 }
