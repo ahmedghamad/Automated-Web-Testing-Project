@@ -19,6 +19,7 @@ public class ProductsSteps {
     @Managed
     HomePage homePage;
 
+
     @Managed
     ProductsPage productsPage;
 
@@ -26,6 +27,7 @@ public class ProductsSteps {
     public void iAmOnTheHomepage() {
         homePage.open();
         homePage.acceptConsentIfVisible();
+        homePage.dismissPopups();
     }
 
     @And("I click {string} in the navbar")
@@ -131,6 +133,7 @@ public class ProductsSteps {
     @Given("the search bar is empty")
     public void theSearchBarIsEmpty() {
         productsPage.open();
+        productsPage.acceptConsentIfVisible();
         productsPage.clearSearchBar();
     }
 

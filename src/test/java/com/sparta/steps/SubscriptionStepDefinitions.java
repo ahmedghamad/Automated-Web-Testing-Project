@@ -89,13 +89,16 @@ public class SubscriptionStepDefinitions {
 
     @Given("a user has already subscribed with email {string}")
     public void aUserHasAlreadySubscribedWithEmail(String email) {
+        steps.open_homepage();
+        steps.scroll_to_footer();
         steps.enter_email(email);
         steps.click_subscribe_button();
     }
 
     @When("the user subscribes again with email {string}")
     public void theUserSubscribesAgainWithEmail(String email) {
-
+        steps.open_homepage();
+        steps.scroll_to_footer();
         steps.enter_email(email);
         steps.click_subscribe_button();
     }
