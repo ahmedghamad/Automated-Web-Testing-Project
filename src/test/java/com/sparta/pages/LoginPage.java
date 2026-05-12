@@ -22,13 +22,13 @@ public class LoginPage extends PageObject {
     private WebElementFacade existingEmailErrorMessage;
 
     //Login page Locators
-    @FindBy(name = "email")
+    @FindBy(css = "input[data-qa='login-email']")
     private WebElementFacade loginEmail;
 
-    @FindBy(name = "password")
+    @FindBy(css = "input[data-qa='login-password']")
     private WebElementFacade loginPassword;
 
-    @FindBy(xpath = "//button[text()='Login']")
+    @FindBy(css = "button[data-qa='login-button']")
     private WebElementFacade loginButton;
 
     @FindBy(xpath = "//p[text()='Your email or password is incorrect!']")

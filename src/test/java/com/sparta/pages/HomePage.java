@@ -129,9 +129,15 @@ public class HomePage extends PageObject {
     }
 
     public void viewProduct(){
-        womenCategory.click();
-        dressCategory.click();
-        firstDress.click();
+        evaluateJavascript("arguments[0].scrollIntoView(true);", womenCategory);
+        evaluateJavascript("arguments[0].click();", womenCategory);
+
+        evaluateJavascript("arguments[0].scrollIntoView(true);", dressCategory);
+        evaluateJavascript("arguments[0].click();", dressCategory);
+
+        evaluateJavascript("arguments[0].scrollIntoView(true);", firstDress);
+        evaluateJavascript("arguments[0].click();", firstDress);
+
 
     }
 
