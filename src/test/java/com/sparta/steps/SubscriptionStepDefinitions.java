@@ -19,6 +19,7 @@ public class SubscriptionStepDefinitions {
     }
 
     @When("user enters email {string}")
+    @When("user enters invalid email {string}")
     public void enter_email(String email) {
         steps.enter_email(email);
     }
@@ -33,23 +34,10 @@ public class SubscriptionStepDefinitions {
         steps.verify_success_message(msg);
     }
 
-// Sad path: Empty email field
-
-    @Given("the subscription form is visible")
-    public void form_visible(){
-        steps.open_homepage();
-        steps.scroll_to_footer();
-    }
-
     @When("the visitor leaves the email field empty")
     public void email_field_empty(){
         steps.empty_email_validation();
     }
-
-    @And("clicks the Subscribe button")
-    public void user_click_subscribe_button(){
-        steps.click_subscribe_button();
-    };
 
     @Then("the form submission is prevented")
     public void form_not_submitted(){
@@ -61,47 +49,17 @@ public class SubscriptionStepDefinitions {
         steps.verify_error_message_displayed();
     }
 
-
-  // Sad path: Invalid email
-
-    @Given("the visitor is on the website")
-    public void theVisitorIsOnTheWebsite() {
-        steps.open_homepage();
-        steps.scroll_to_footer();
-    }
-
     @When("the visitor enters invalid email {string}")
     public void theVisitorEntersInvalidEmail(String email) {
         steps.enter_email(email);
     }
 
-    @Then("the subscription is not submitted")
-    public void theSubscriptionIsNotSubmitted() {
-        steps.verify_subscription_not_submitted();
-    }
-
-    @And("an error message is displayed")
-    public void anErrorMessageIsDisplayed() {
-        steps.verify_error_message_displayed();
-    }
-
-    // Sad path: Already registered email
-
     @Given("a user has already subscribed with email {string}")
+    @When("the user subscribes again with email {string}")
     public void aUserHasAlreadySubscribedWithEmail(String email) {
         steps.open_homepage();
         steps.scroll_to_footer();
         steps.enter_email(email);
         steps.click_subscribe_button();
     }
-
-    @When("the user subscribes again with email {string}")
-    public void theUserSubscribesAgainWithEmail(String email) {
-        steps.open_homepage();
-        steps.scroll_to_footer();
-        steps.enter_email(email);
-        steps.click_subscribe_button();
-    }
-
-
 }

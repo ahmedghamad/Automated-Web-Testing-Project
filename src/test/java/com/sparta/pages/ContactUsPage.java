@@ -3,9 +3,7 @@ package com.sparta.pages;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
-
 
 @DefaultUrl("https://automationexercise.com/")
 public class ContactUsPage extends PageObject {
@@ -46,10 +43,12 @@ public class ContactUsPage extends PageObject {
     @FindBy(css = ".contact-form input[data-qa='submit-button']")
     WebElementFacade submitButton;
 
-    @FindBy(xpath = "//*[contains(normalize-space(),'Success! Your details have been submitted successfully.')]")
-    WebElementFacade successMessage;
+    private final By successMessageLocator = By.xpath(
+            "//div[contains(@class,'alert-success')]"
+    );
 
-    //open website, handle cookie immediately
+    // Navigation
+
     public void openHomePage() {
         openUrl("https://automationexercise.com");
         acceptCookiesIfVisible();
@@ -60,12 +59,10 @@ public class ContactUsPage extends PageObject {
             if (consentButton.isCurrentlyVisible()) {
                 evaluateJavascript("arguments[0].click();", consentButton);
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
     }
 
     public void clickContactUs() {
-        acceptCookiesIfVisible();
         contactUsLink.waitUntilClickable().click();
     }
 
@@ -73,24 +70,22 @@ public class ContactUsPage extends PageObject {
         return getInTouchHeading.waitUntilVisible().isVisible();
     }
 
+    // Form actions
+
     public void enterName(String name) {
-        nameInput.waitUntilVisible().clear();
-        nameInput.sendKeys(name);
+        nameInput.type(name);
     }
 
     public void enterEmail(String email) {
-        emailInput.waitUntilVisible().clear();
-        emailInput.sendKeys(email);
+        emailInput.type(email);
     }
 
     public void enterSubject(String subject) {
-        subjectInput.waitUntilVisible().clear();
-        subjectInput.sendKeys(subject);
+        subjectInput.type(subject);
     }
 
     public void enterMessage(String message) {
-        messageInput.waitUntilVisible().clear();
-        messageInput.sendKeys(message);
+        messageInput.type(message);
     }
 
     public void uploadFile(String fileName) {
@@ -98,59 +93,47 @@ public class ContactUsPage extends PageObject {
         if (!Files.exists(filePath)) {
             throw new IllegalArgumentException("File not found: " + filePath);
         }
-
         uploadFileInput.sendKeys(filePath.toString());
     }
 
+    // Submit
+
     public void clickSubmit() {
-        evaluateJavascript("""
-        document.querySelectorAll("iframe[id^='aswift'], iframe[title='Advertisement']")
-            .forEach(iframe => iframe.remove());
-    """);
 
-        submitButton.waitUntilVisible();
-        submitButton.submit();
+        submitButton.click();
 
+        // alert handling (safe)
+        try {
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
+            Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            alert.accept();
+        } catch (Exception ignored) {}
+    }
+
+    public void clickSubmitWithoutAcceptingAlert() {
+        submitButton.click();
+    }
+
+    public void waitForSuccessMessage() {
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-        alert.accept();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(successMessageLocator));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(successMessageLocator));
     }
 
     public boolean isSuccessMessageDisplayed() {
-        return successMessage.waitUntilVisible().isVisible();
+        try {
+            return getDriver().findElement(successMessageLocator).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getSuccessMessageText() {
-        return successMessage.waitUntilVisible().getText();
-    }
-
-    // Sad path:
-
-    public void clickSubmitWithoutAcceptingAlert() {
-        evaluateJavascript("""
-        document.querySelectorAll("iframe[id^='aswift'], iframe[title='Advertisement']")
-            .forEach(iframe => iframe.remove());
-    """);
-
-        submitButton.waitUntilVisible();
-        submitButton.submit();
+        return getDriver().findElement(successMessageLocator).getText();
     }
 
     public boolean isStillOnContactUsPage() {
         return getInTouchHeading.isCurrentlyVisible();
     }
-
-    public boolean isFormNotSubmitted() {
-        return !getDriver().getPageSource()
-                .contains("Success! Your details have been submitted successfully.");
-    }
-
-    public boolean isEmailValidationErrorDisplayed() {
-        return Boolean.TRUE.equals(evaluateJavascript("""
-        const email = document.querySelector(".contact-form input[data-qa='email']");
-        return email && !email.validity.valid;
-    """));
-    }
-
-
 }

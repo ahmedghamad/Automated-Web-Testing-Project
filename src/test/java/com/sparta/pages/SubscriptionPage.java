@@ -5,12 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 public class SubscriptionPage extends PageObject {
-//waitUntilVisible -> prevent timing problems like pop up
+     //waitUntilVisible -> prevent timing problems like pop up
 
     public SubscriptionPage(WebDriver driver) {
         super(driver);
     }
-//close cookies pop up
+    //close cookies pop up
     @FindBy(xpath = "//button[contains(@class,'fc-cta-consent') or @aria-label='Consent']")
     private WebElementFacade consentButton;
 
@@ -23,14 +23,14 @@ public class SubscriptionPage extends PageObject {
     @FindBy(xpath = "//div[@class='alert-success alert']")
     private WebElementFacade successMsg;
 
-//open website, handle cookie immediately
+    //open website, handle cookie immediately
     public void openHomePage() {
         openUrl("https://automationexercise.com");
         acceptCookiesIfPresent();
     }
 
-//handle cookie pop up problem
-//Selenium click might fail because of overlays => use Js to click
+    //handle cookie pop up problem
+    //Selenium click might fail because of overlays => use Js to click
     public void acceptCookiesIfPresent() {
         try {
             if (consentButton.isCurrentlyVisible()) {
@@ -50,8 +50,8 @@ public class SubscriptionPage extends PageObject {
         emailInput.waitUntilClickable();
         emailInput.clear();
         emailInput.type(email);
-    }
-//sad path empty email
+     }
+    //sad path empty email
     public void leaveEmailFieldEmpty(){
         emailInput.waitUntilClickable();
         emailInput.clear();
@@ -66,12 +66,12 @@ public class SubscriptionPage extends PageObject {
         return successMsg.waitUntilVisible().getText();
     }
 
-//return true if validation exist
+    //return true if validation exist
     public boolean isValidationEmailDisplayed(){
         String message = emailInput.getAttribute("validationMessage");
         return message != null && !message.trim().isEmpty();
     }
-//verify user still stay on page
+    //verify user still stay on page
     public boolean isStillOnPage(){
         return getDriver().getCurrentUrl().contains("automationexercise.com");
     }

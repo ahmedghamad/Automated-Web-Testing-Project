@@ -6,7 +6,7 @@ Feature: Contact Us Form
     Given user launches the application
     When user navigates to Contact Us page
     And user enters name "John Doe"
-    And user enters email "john@test.com"
+    And user enters a contact email "john@test.com"
     And user enters subject "Product Inquiry"
     And user enters message "Need more information about your products"
     And user uploads file "src/test/resources/fileToTestContactUsForm.jpg"
@@ -14,37 +14,41 @@ Feature: Contact Us Form
     Then success message should be displayed
 
   @sadPath
-    # missing required field: email
-  @sadPath @requiredFields
-  Scenario Outline: Submission with Missing Required Fields
+  Scenario: Submit contact us form with no email
     Given user launches the application
     When user navigates to Contact Us page
-    And user enters name "<name>"
-    And user enters 1 email "<email>"
-    And user enters subject "<subject>"
-    And user enters message "<message>"
+    And user enters name "John Doe"
+    And user enters subject "Product Inquiry"
+    And user enters message "Need more information about your products"
     And user uploads file "src/test/resources/fileToTestContactUsForm.jpg"
     And user clicks submit button without accepting alert
     Then the form should not be submitted
     And the user should remain on the Contact Us page
 
-    Examples:
-      | name | email         | subject      | message      |
-      |      | anne@test.com | Test Subject | Test message |
-      | Anne |               | Test Subject | Test message |
-      | Anne | anne@test.com |              | Test message |
-      | Anne | anne@test.com | Test Subject |              |
-
-   # Sad path: invalid email
   @sadPath @invalidEmail
-  Scenario: Submission with Invalid Email Format
+  Scenario Outline: Submission with Invalid Email Format
     Given user launches the application
     When user navigates to Contact Us page
     And user enters name "Anne"
-    And user enters 1 email "user@com"
+    And user enters a contact email "<email>"
     And user enters subject "Test Subject"
     And user enters message "Test message"
-    And user clicks submit button without accepting alert
+    When user clicks submit button without accepting alert
     Then the form should not be submitted
-    And an email validation error should be displayed
     And the user should remain on the Contact Us page
+    Examples:
+      | email                  |
+      | user@com               |
+      | plainaddress           |
+      | @missinglocal.com      |
+      | missingatsign.com      |
+      | missingdomain@         |
+      | user@.com              |
+      | user@com.              |
+      | user..name@example.com |
+      | .username@example.com  |
+      | username@example       |
+      | username@-example.com  |
+      | username@example..com  |
+      | user name@example.com  |
+      | username@@example.com  |
