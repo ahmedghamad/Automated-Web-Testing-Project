@@ -1,55 +1,31 @@
-Feature: Cart Functionality
+Feature: Cart
+
+  In order to be able to buy items
+  As a shopper of the website
+  I want to be able add and remove items from the cart
 
   @Happy
-  Scenario: User adds a product to the cart successfully
-
-    Given the user is on the homepage
-    And the user navigates to the products page
-    And the user adds a product to the cart
-    And the user clicks the View Cart button
-    Then the product should be displayed in the cart
+  Scenario: Add item to cart and check cart value
+    Given I am on the home page
+    When I add an item to cart
+    Then there should an item in my cart
 
   @Happy
-  Scenario: User views the shopping cart successfully
-
-    Given the user is on the homepage
-    When the user clicks the Cart button
-    Then the shopping cart page should be displayed
-
+  Scenario: Remove item from cart and check cart value
+    Given I am on the home page
+    And I have only one item in the cart
+    When I remove the item from cart
+    Then there should be no items in my cart
 
   @Happy
-  Scenario: User removes a product from the cart successfully
+  Scenario: Add multiple of the same item to cart and check cart value
+    Given I am on the home page
+    When I add two of an item to cart
+    Then there should 2 of that item in my cart
 
-    Given the user is on the homepage
-    And the user navigates to the products page
-    And the user adds a product to the cart
-    And the user clicks the View Cart button
-    When the user removes the product from the cart
-    Then the cart should display an empty cart message
-
-  @Sad
-  Scenario: User views an empty cart without products
-
-    Given the user is on the homepage
-    When the user clicks the Cart button
-    Then the cart should display an empty cart message
-
-
-  @Sad
-  Scenario: User attempts checkout with an empty cart
-
-    Given the user is on the homepage
-    And the user clicks the Cart button
-    When the user attempts to proceed to checkout
-    Then the checkout should not continue
-
-
-  @Sad
-  Scenario: Removed product should no longer appear in cart
-
-    Given the user is on the homepage
-    And the user navigates to the products page
-    And the user adds a product to the cart
-    And the user clicks the View Cart button
-    When the user removes the product from the cart
-    Then the product should not be displayed in the cart
+  @Happy
+  Scenario: Remove multiple items from cart and check cart value
+    Given I am on the home page
+    And I have only two items in the cart
+    When I remove the items from cart
+    Then there should be no items in my cart

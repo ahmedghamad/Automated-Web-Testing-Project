@@ -12,6 +12,9 @@ public class CheckoutSteps {
 
     CheckoutPage checkoutPage;
     ProductsPage productsPage;
+    ProductPage productPage;
+
+    PaymentPage paymentPage;
     HomePage homePage;
     RegistrationPage registrationPage;
 
@@ -25,17 +28,17 @@ public class CheckoutSteps {
 
     @And("the user has added a product to the cart")
     public void theUserHasAddedAProductToTheCart() {
+        homePage.viewProduct();
+        productPage.clickAddToCartButton();
+        productPage.clickContinueShopping();
 
 
     }
 
     @When("the user proceeds to checkout")
     public void theUserProceedsToCheckout() {
-        homePage.open();
-        homePage.acceptConsentIfVisible();
-        homePage.dismissPopups();
-        MatcherAssert.assertThat(homePage.getDriver().getCurrentUrl(), Matchers.is("https://automationexercise.com/checkout"));
-
+        productPage.clickOnCart();
+        cartPage.proceedToCheckout();
     }
 
     @And("the user clicks the Place Order button")
@@ -45,7 +48,7 @@ public class CheckoutSteps {
 
     @And("the user enters valid payment details")
     public void theUserEntersValidPaymentDetails() {
-        checkoutPage.enterCardName("Test User");
+        paymentPage.enterCardName("Test User");
 
         checkoutPage.enterCardNumber("4111111111111111");
 

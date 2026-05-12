@@ -58,35 +58,7 @@ public class CheckoutPage extends PageObject {
         placeOrderButton.click();
     }
 
-    public void enterCardName(String name) {
 
-        nameOnCardField.type(name);
-    }
-
-    public void enterCardNumber(String number) {
-
-        cardNumberField.type(number);
-    }
-
-    public void enterCVC(String cvc) {
-
-        cvcField.type(cvc);
-    }
-
-    public void enterExpiryMonth(String month) {
-
-        expiryMonthField.type(month);
-    }
-
-    public void enterExpiryYear(String year) {
-
-        expiryYearField.type(year);
-    }
-
-    public void clickPayAndConfirmButton() {
-
-        payAndConfirmButton.click();
-    }
 
     public boolean isOrderSuccessMessageDisplayed() {
 
