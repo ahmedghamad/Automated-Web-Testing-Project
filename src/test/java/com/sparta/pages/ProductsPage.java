@@ -4,6 +4,8 @@ import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
+import org.openqa.selenium.JavascriptExecutor;
+
 import java.util.List;
 
 @DefaultUrl("https://automationexercise.com/products")
@@ -47,9 +49,9 @@ public class ProductsPage extends PageObject {
 
 
     public void acceptConsentIfVisible() {
-            if (consentButton.isVisible()) {
-                consentButton.click();
-            }
+        if (consentButton.isVisible()) {
+            consentButton.click();
+        }
     }
 
     public void clickProductsNavLink() {
@@ -90,8 +92,8 @@ public class ProductsPage extends PageObject {
     }
 
     public void clickSearch() {
-        waitFor(submitSearch).isClickable();
-        submitSearch.click();
+        evaluateJavascript("arguments[0].scrollIntoView(true);", submitSearch);
+        evaluateJavascript("arguments[0].click();", submitSearch);
     }
 
     public boolean areSearchResultsDisplayed() {

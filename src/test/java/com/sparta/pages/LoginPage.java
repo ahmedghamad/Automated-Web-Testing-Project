@@ -16,7 +16,7 @@ public class LoginPage extends PageObject {
     private WebElementFacade signupEmail;
 
     @FindBy(css = "button[data-qa='signup-button']")
-    private WebElementFacade signUpButton;
+    private WebElementFacade signupButton;
 
     @FindBy(xpath = "//p[text()='Email Address already exist!']")
     private WebElementFacade existingEmailErrorMessage;
@@ -45,7 +45,9 @@ public class LoginPage extends PageObject {
     }
 
     public void clickSignupButton() {
-        this.signUpButton.click();
+        evaluateJavascript("arguments[0].scrollIntoView(true);", signupButton);
+
+        evaluateJavascript("arguments[0].click();", signupButton);
     }
 
     public String getExistingEmailErrorMessage() {
@@ -62,7 +64,8 @@ public class LoginPage extends PageObject {
     }
 
     public void clickLoginButton() {
-        this.loginButton.click();
+        evaluateJavascript("arguments[0].scrollIntoView(true);", loginButton);
+        evaluateJavascript("arguments[0].click();", loginButton);
 
     }
 
