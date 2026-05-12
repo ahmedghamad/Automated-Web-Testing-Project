@@ -252,10 +252,10 @@ public class HomePage extends PageObject {
     public void dissmissGoogleVignette(){
 
         try {
-            getDriver().switchTo().frame("google_vignette");
-            WebElementFacade closeBtn = find(By.cssSelector("[id*='close'], [class*='close'], [aria-label='Close']"));
-            if (closeBtn.isVisible()) closeBtn.click();
-            getDriver().switchTo().defaultContent();
+            WebElementFacade vignette = find(By.cssSelector("#google_vignette"));
+            if (vignette.isPresent()) {
+                evaluateJavascript("document.querySelector('#google_vignette').remove();");
+            }
         } catch (Exception ignored) {}
     }
 
