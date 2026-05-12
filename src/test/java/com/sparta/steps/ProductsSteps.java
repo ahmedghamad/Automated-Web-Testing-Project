@@ -2,7 +2,6 @@ package com.sparta.steps;
 
 import com.sparta.pages.HomePage;
 import com.sparta.pages.ProductsPage;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -10,9 +9,6 @@ import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Managed;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-
-import java.util.List;
-
 
 public class ProductsSteps {
 
@@ -38,6 +34,7 @@ public class ProductsSteps {
     @Then("I should be navigated to the products page")
     public void iShouldBeNavigatedToTheProductsPage() {
         productsPage.open();
+        productsPage.acceptConsentIfVisible();
         MatcherAssert.assertThat(productsPage.getDriver().getCurrentUrl(), Matchers.containsString("/products"));
     }
 
@@ -56,7 +53,6 @@ public class ProductsSteps {
         MatcherAssert.assertThat(productsPage.productsHaveNameAndPrice(), Matchers.is(true));
         MatcherAssert.assertThat(productsPage.allProductsHaveViewProductLink(), Matchers.is(true));
     }
-
 
     @Given("I am on the products page")
     public void iAmOnTheProductsPage() {
@@ -150,5 +146,110 @@ public class ProductsSteps {
     @Then("the system handles the input safely")
     public void theSystemHandlesTheInputSafely() {
         MatcherAssert.assertThat(productsPage.isPageStable(), Matchers.is(true));
+    }
+
+    @When("I click the {string} category in the sidebar")
+    public void iClickTheCategoryInTheSidebar(String category) {
+        productsPage.clickCategoryInSidebar(category);
+    }
+
+    @And("I click the {string} subcategory")
+    public void iClickTheSubcategory(String subcategory) {
+        productsPage.clickSubcategory(subcategory);
+    }
+
+    @Then("I should be navigated to the category page")
+    public void iShouldBeNavigatedToTheCategoryPage() {
+        MatcherAssert.assertThat(productsPage.getDriver().getCurrentUrl(), Matchers.containsString("/category_products"));
+    }
+
+    @And("the page heading should contain {string}")
+    public void thePageHeadingShouldContain(String expectedHeading) {
+        MatcherAssert.assertThat(productsPage.getCategoryPageHeading(), Matchers.containsString(expectedHeading));
+    }
+
+    @And("at least one product should be displayed")
+    public void atLeastOneProductShouldBeDisplayed() {
+        MatcherAssert.assertThat(productsPage.atLeastOneProductDisplayed(), Matchers.is(true));
+    }
+
+    @And("I navigate back")
+    public void iNavigateBack() {
+        productsPage.navigateBack();
+    }
+
+    @Then("I should be on the products page")
+    public void iShouldBeOnTheProductsPage() {
+        MatcherAssert.assertThat(productsPage.isOnProductsPage(), Matchers.is(true));
+    }
+
+    @When("I click the Kookie Kids brand")
+    public void iClickTheKookieKidsBrand() {
+        homePage.clickKookieKids();
+    }
+
+    @Then("I should be navigated to the Kookie Kids brand page")
+    public void iShouldBeNavigatedToTheKookieKidsBrandPage() {
+        MatcherAssert.assertThat(homePage.getDriver().getCurrentUrl(), Matchers.containsString("Kookie"));
+    }
+
+    @Then("I should be back on the home page")
+    public void iShouldBeBackOnTheHomePage() {
+       MatcherAssert.assertThat(homePage.getDriver().getCurrentUrl(), Matchers.containsString("automationexercise.com"));
+    }
+
+    @When("I hover over the first product")
+    public void iHoverOverTheFirstProduct() {
+        productsPage.hoverOverFirstProduct();
+    }
+
+    @And("I click Add to Cart on that product")
+    public void iClickAddToCartOnThatProduct() {
+        productsPage.clickAddToCartOnFirstProduct();
+    }
+
+    @Then("a confirmation modal should appear")
+    public void aConfirmationModalShouldAppear() {
+        MatcherAssert.assertThat(productsPage.isCartModalVisible(), Matchers.is(true));
+    }
+
+    @And("the modal should display {string}")
+    public void theModalShouldDisplay(String expectedMessage) {
+        MatcherAssert.assertThat(productsPage.getModalMessage(), Matchers.containsString(expectedMessage));
+    }
+
+    @And("the modal should contain a Continue Shopping button")
+    public void theModalShouldContainAContinueShoppingButton() {
+        MatcherAssert.assertThat(productsPage.isContinueShoppingButtonVisible(), Matchers.is(true));
+    }
+
+    @And("the modal should contain a View Cart button")
+    public void theModalShouldContainAViewCartButton() {
+        MatcherAssert.assertThat(productsPage.isViewCartButtonVisible(), Matchers.is(true));
+    }
+
+    @And("I click Continue Shopping")
+    public void iClickContinueShopping() {
+        productsPage.clickContinueShopping();
+    }
+
+    @Then("I should remain on the products page")
+    public void iShouldRemainOnTheProductsPage() {
+        MatcherAssert.assertThat(productsPage.isOnProductsPage(), Matchers.is(true));
+    }
+
+    @And("I click View Cart in the modal")
+    public void iClickViewCartInTheModal() {
+        productsPage.clickViewCartInModal();
+    }
+
+    @Then("I should be navigated to the cart page")
+    public void iShouldBeNavigatedToTheCartPage() {
+       MatcherAssert.assertThat(productsPage.isOnCartPage(), Matchers.is(true));
+    }
+
+    @And("the product should be visible in the cart")
+    public void theProductShouldBeVisibleInTheCart() {
+        MatcherAssert.assertThat(productsPage.isCartNotEmpty(), Matchers.is(true));
     }
 }

@@ -3,6 +3,7 @@ package com.sparta.steps;
 import com.sparta.pages.HomePage;
 import com.sparta.pages.LoginPage;
 import com.sparta.pages.RegistrationPage;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.hamcrest.MatcherAssert;
@@ -48,6 +49,4 @@ public class LoginSteps {
         MatcherAssert.assertThat(loginPage.getLoginErrorMessage(),Matchers.equalTo(expectedError));
 
     }
-
-
 }

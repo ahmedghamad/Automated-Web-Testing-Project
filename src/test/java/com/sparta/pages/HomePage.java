@@ -118,6 +118,10 @@ public class HomePage extends PageObject {
         kookieKidsBrand.click();
     }
 
+    public boolean isOnBrandPage(String brandName) {
+        return getDriver().getCurrentUrl().contains(brandName);
+    }
+
 //Womens Actions
     public void clickWomensCategory(){
         womenCategory.click();
@@ -282,6 +286,8 @@ public class HomePage extends PageObject {
             System.out.println("Consent popup not displayed");
         }
     }
+
+
 
 
 
