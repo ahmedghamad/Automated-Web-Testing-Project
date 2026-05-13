@@ -33,11 +33,11 @@ Key objectives:
 
 | Name | Role | 
 |------|------|
-| Ahmed | Product Owner | 
 | Badria | Scrum Master | 
 | Roshanbi | Test Lead | 
 | Tam | Tester | 
-| Sharaf | Tester | 
+| Sharaf | Tester |
+| Ahmed | Tester | 
 
 ## System Under Test
 
