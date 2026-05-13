@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>registration.feature</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #b3ae60;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+registration.feature</font>
+</center></td></tr></table>
+<pre><span class="s0">Feature</span><span class="s1">: </span><span class="s2">User Registration</span>
+  <span class="s2">As a new user,</span>
+  <span class="s2">I want to register an account,</span>
+  <span class="s2">So that I can access the application as a registered customer.</span>
+
+  <span class="s0">Background</span><span class="s1">:</span>
+    <span class="s0">Given </span><span class="s2">the user is on the Home page</span>
+    <span class="s0">When </span><span class="s2">the user clicks the Signup/Login button</span>
+
+  <span class="s3">@Happy</span>
+  <span class="s0">Scenario</span><span class="s1">: </span><span class="s2">Successful user registration with valid details</span>
+
+    <span class="s0">And </span><span class="s2">the user enters a name &quot;Test_User&quot;</span>
+    <span class="s0">And </span><span class="s2">the user enters a unique valid email address</span>
+    <span class="s0">And </span><span class="s2">the user clicks the Signup button</span>
+    <span class="s0">And </span><span class="s2">the user completes the registration form with valid details</span>
+    <span class="s0">And </span><span class="s2">the user clicks the Create Account button</span>
+    <span class="s0">Then </span><span class="s2">the account should be created successfully</span>
+    <span class="s0">And </span><span class="s2">the &quot;ACCOUNT CREATED!&quot; message should be displayed</span>
+
+  <span class="s3">@Sad</span>
+  <span class="s0">Scenario</span><span class="s1">: </span><span class="s2">User registration with an already registered email</span>
+
+    <span class="s0">And </span><span class="s2">the user enters a name &quot;Test_User&quot;</span>
+    <span class="s0">And </span><span class="s2">the user enters an already registered email address &quot;testuser1@outlook.com&quot;</span>
+    <span class="s0">And </span><span class="s2">the user clicks the Signup button</span>
+    <span class="s0">Then </span><span class="s2">the user should see an error message &quot;Email Address already exist!&quot;</span>
+    <span class="s0">And </span><span class="s2">the account should not be created</span>
+
+</pre>
+</body>
+</html>
