@@ -1,78 +1,120 @@
 # Automated Web Testing Project
 
 ## Table of Contents
+- [Goal](#goal-of-the-project)
+- [Team](#team)
+- [System Under Test](#system-under-test)
+- [Setup](#how-to-set-up-the-framework)
+- [Project Structure](#project-structure)
+- [What Was Tested](#what-was-tested)
+- [Test Metrics](#test-metrics)
+- [Sprint DoR & DoD](#sprint-definition-of-ready)
+- [Defect Reports](#defect-reports)
+- [Exploratory Testing](#exploratory-test-charters)
+
+
+---
 
 ## Goal of the Project
+The goal was to design and implement an automated test framework for
+[Automation Exercise](https://automationexercise.com/) following Agile Scrum
+methodology across a single sprint, using Java, Selenium, Serenity BDD and
+Cucumber with the Page Object Model pattern.
 
-The goal of this project was to design and implement an automated test framework 
-for the e-commerce demo website [Automation Exercise](https://automationexercise.com/).
-
-The project followed an Agile Scrum methodology across a single sprint, producing 
-a fully functional test automation framework using the Page Object Model (POM) 
-pattern, Gherkin BDD scenarios, and a CI/CD pipeline via GitHub Actions.
-
-The key objectives were to:
+Key objectives:
 - Derive user stories from the site's functionality
 - Write Gherkin feature files representing real user journeys
-- Automate test cases using Java, Selenium and Cucumber
-- Identify and document any defects found during testing
+- Automate test cases and document any defects found
 - Demonstrate collaborative working practices using GitHub
-
-
-## Team
+  
+---
 
 ## System Under Test
 
+| | |
+|-|-|
+| **URL** | https://automationexercise.com/ |
+| **Type** | E-commerce demo site |
+| **Browser** | Chrome |
+| **Environment** | Desktop web |
+
+---
+
 ## How to Set Up the Framework
+
+**Prerequisites:** Java JDK 21, Maven, Chrome, IntelliJ IDEA
+
+# Clone the repo
+git clone https://github.com/ahmedghamad/Automated-Web-Testing-Project.git
+
+# Install dependencies
+mvn clean install
+
+# Run all tests
+mvn verify
+
+# View Serenity report
+open target/site/serenity/index.html
 
 ## Project Structure
 
+src/test/
+├── java/com/sparta/
+│   ├── pages/          # Page Object Model classes
+│   ├── steps/          # Cucumber step definitions
+│   └── runners/        # Test runner
+└── resources/
+└── features/       # Gherkin feature files
+
+---
+
 ## What Was Tested
 
-## Test Metrics
+| # | User Story | Type | Status |
+|---|-----------|------|--------|
+| 1 | User Login | Automated | ✅ |
+| 2 | User Registration | Automated | ✅ |
+| 3 | User Logout | Automated | ✅ |
+| 4 | Browse Products | Automated | ✅ |
+| 5 | Search for Product | Automated | ✅ |
+| 6 | Filter by Category | Automated | ✅ |
+| 7 | Filter by Brand | Automated | ✅ |
+| 8 | View Product Details | Automated | ✅ |
+| 9 | Add Product to Cart | Automated | ✅ |
+| 10 | Add Multiple Quantities | Automated | ✅ |
+| 11 | Write a Product Review | Automated | ✅ |
+| 12 | View Cart | Automated | ✅ |
+| 13 | Remove from Cart | Automated | ✅ |
+| 14 | Checkout Process | Automated | ✅ |
+| 15 | Contact Form | Automated | ✅ |
+| 16 | Download Invoice | Manual | ✅ |
+
 
 ## Sprint Definition of Ready
-
-A user story is **ready to be worked on** when ALL of the following are true:
-
-- [ ] Sprint goal is clearly defined and agreed by the whole team
-- [ ] All user stories in the sprint are in a ready state (individual DoR met)
-- [ ] Backlog has been prioritised and the team knows what order to work in
-- [ ] All stories have been assigned to a team member
-- [ ] Team capacity is known — everyone knows how much time they have
-- [ ] GitHub project board is set up with all tickets in the Backlog column
-- [ ] Repository is set up and all team members have access
-- [ ] Framework base classes and folder structure are in place before stories begin
-- [ ] Everyone has attended sprint planning and agreed on the scope
-- [ ] No unresolved blockers or dependencies outstanding
+A user story is ready when ALL of the following are true:
+- [ ] Sprint goal defined and agreed by the team
+- [ ] All stories in a ready state with acceptance criteria
+- [ ] Backlog prioritised and stories assigned
+- [ ] GitHub project board set up with all tickets
+- [ ] Framework setup complete before stories begin
+- [ ] No unresolved blockers outstanding
 
 ## Sprint Definition of Done
+The sprint is done when ALL of the following are true:
+- [ ] All stories meet their individual DoD
+- [ ] All tests passing in CI on main branch
+- [ ] All branches merged — nothing left in progress
+- [ ] Project board fully up to date
+- [ ] All defects logged as GitHub Issues
+- [ ] README complete and up to date
+- [ ] GitHub Actions workflow running successfully
+- [ ] Test metrics recorded
+- [ ] Sprint retrospective completed
 
-The sprint is **done** when ALL of the following are true:
-
-- [ ] All committed user stories meet their individual Definition of Done
-- [ ] All tests are passing in the CI pipeline on the main branch
-- [ ] All feature branches are merged into main — nothing left in progress
-- [ ] Project board is fully up to date:
-  - Completed stories in Done column
-  - Defects in Issues/Defects column
-  - Nothing left In Progress
-- [ ] All defects found are logged as GitHub Issues with full details
-- [ ] README is complete and up to date
-- [ ] GitHub Actions workflow is running successfully
-- [ ] Exploratory test charters are written and documented
-- [ ] Test metrics are recorded (total tests, passed, failed, pass rate %)
-- [ ] Sprint review has been held and work demonstrated
-- [ ] Sprint retrospective has been completed:
-  - What went well?
-  - What didn't go well?
-  - What would we do differently?
-- [ ] All deliverables are ready for presentation
-
-## Defect Reports
 
 ## Exploratory Test Charters
+Exploratory testing was conducted alongside automation to discover
+edge cases not covered by scripted tests. 
 
-## GitHub Actions CI
+---
 
-## Retrospective
