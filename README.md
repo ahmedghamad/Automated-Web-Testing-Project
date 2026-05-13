@@ -58,15 +58,16 @@ open target/site/serenity/index.html
 
 ## Project Structure
 
-src/test/
-├── java/com/sparta/
-│   ├── pages/          # Page Object Model classes
-│   ├── steps/          # Cucumber step definitions
-│   └── runners/        # Test runner
-└── resources/
-└── features/       # Gherkin feature files
-
----
+```
+src/
+└── test/
+    ├── java/com/sparta/
+    │   ├── pages/          # Page Object Model classes
+    │   ├── steps/          # Cucumber step definitions
+    │   └── runners/        # Test runner
+    └── resources/
+        └── features/       # Gherkin feature files
+```
 
 ## What Was Tested
 
