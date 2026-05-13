@@ -8,6 +8,8 @@ import io.cucumber.java.en.When;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
+import static org.hamcrest.Matchers.is;
+
 public class CheckoutSteps {
 
     CheckoutPage checkoutPage;
@@ -16,14 +18,22 @@ public class CheckoutSteps {
 
     PaymentPage paymentPage;
     HomePage homePage;
+    LoginPage loginPage;
     RegistrationPage registrationPage;
 
     CartPage cartPage;
 
 
-    @Given("the user is logged into the application")
-    public void theUserIsLoggedIntoTheApplication() {
-       MatcherAssert.assertThat(homePage.isLoggedInAsTextDisplayed(), Matchers.is(true));;
+    @Given("I am logged in using email {string} and password {string}")
+    public void iAmLoggedInUsingEmailAndPassword(String loginEmail, String loginPassword) {
+        homePage.open();
+        homePage.dismissPopups();
+        homePage.clickLoginLink();
+        loginPage.enterLoginEmail(loginEmail);
+        loginPage.enterLoginPassword(loginPassword);
+        loginPage.clickLoginButton();
+
+
     }
 
     @And("the user has added a product to the cart")
@@ -31,7 +41,6 @@ public class CheckoutSteps {
         homePage.viewProduct();
         productPage.clickAddToCartButton();
         productPage.clickContinueShopping();
-
 
     }
 
@@ -48,24 +57,23 @@ public class CheckoutSteps {
 
     @And("the user enters valid payment details")
     public void theUserEntersValidPaymentDetails() {
-        paymentPage.enterCardName("Test User");
+        paymentPage.enterNameOnCard("Test User");
 
-        checkoutPage.enterCardNumber("4111111111111111");
+        paymentPage.enterCardNumber("4111111111111111");
 
-        checkoutPage.enterCVC("123");
+        paymentPage.enterCVC("123");
 
-        checkoutPage.enterExpiryMonth("12");
+        paymentPage.enterExpiryMonth("12");
 
-        checkoutPage.enterExpiryYear("2030");
+        paymentPage.enterExpiryYear("2030");
 
-        checkoutPage.clickPayAndConfirmButton();
+        paymentPage.clickPayAndConfirm();
     }
 
     @Then("the order page should display a confirmation message")
     public void theOrderShouldBePlacedSuccessfully() {
         MatcherAssert.assertThat(
-                checkoutPage.isOrderSuccessMessageDisplayed(),
-                Matchers.is(true));
+                paymentPage.getConfirmationMessage(), is("ORDER PLACED!"));
     }
 
     @Then("the delivery address should be displayed correctly")
@@ -73,20 +81,20 @@ public class CheckoutSteps {
 
         MatcherAssert.assertThat(
                 checkoutPage.isDeliveryAddressDisplayed(),
-                Matchers.is(true));
+                is(true));
     }
 
     @And("the billing address should be displayed correctly")
     public void theBillingAddressShouldBeDisplayedCorrectly() {
         MatcherAssert.assertThat(
                 checkoutPage.isBillingAddressDisplayed(),
-                Matchers.is(true));
+                is(true));
     }
 
     @Given("the user has successfully placed an order")
     public void theUserHasSuccessfullyPlacedAnOrder() {MatcherAssert.assertThat(
             checkoutPage.isOrderSuccessMessageDisplayed(),
-            Matchers.is(true));
+            is(true));
     }
 
     @When("the user clicks the Download Invoice button")
@@ -99,7 +107,7 @@ public class CheckoutSteps {
 
         MatcherAssert.assertThat(
                 checkoutPage.isInvoiceDownloaded(),
-                Matchers.is(true));
+                is(true));
     }
 
     @Given("the user has added multiple products to the cart")
@@ -175,4 +183,7 @@ public class CheckoutSteps {
     }
 
 
+    @Given("the user is logged into the application")
+    public void theUserIsLoggedIntoTheApplication() {
+    }
 }

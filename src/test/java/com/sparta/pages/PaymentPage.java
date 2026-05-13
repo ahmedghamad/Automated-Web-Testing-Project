@@ -10,19 +10,19 @@ public class PaymentPage extends PageObject {
     @FindBy(name = "name_on_card")
     private WebElementFacade nameOnCard;
 
-    @FindBy(className = "number")
+    @FindBy(css = "#payment-form > div:nth-child(3) > div > input")
     private WebElementFacade cardNumber;
 
-    @FindBy(className = "card-cvc")
+    @FindBy(css = "#payment-form > div:nth-child(4) > div.col-sm-4.form-group.cvc > input")
     private WebElementFacade cvc;
 
-    @FindBy(className = "expiry-month")
+    @FindBy(css = "#payment-form > div:nth-child(4) > div:nth-child(2) > input")
     private WebElementFacade cardExpiryMonth;
 
-    @FindBy(className = "expiry-year")
+    @FindBy(css = "#payment-form > div:nth-child(4) > div:nth-child(3) > input")
     private WebElementFacade cardExpiryYear;
 
-    @FindBy(id = "submit")
+    @FindBy(css = "#submit")
     private WebElementFacade submit;
 
     @FindBy(className = "text-center")
@@ -40,20 +40,20 @@ public class PaymentPage extends PageObject {
         cvc.type(cvcType);
     }
 
-    public void enterCardExpiryMonth(String month) {
+    public void enterExpiryMonth(String month) {
         cardExpiryMonth.type(month);
     }
 
-    public void enterCardExpiryYear(String year) {
+    public void enterExpiryYear(String year) {
         cardExpiryYear.type(year);
     }
 
-    public void submit() {
+    public void clickPayAndConfirm() {
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", submit);
         submit.click();
     }
 
-    public String getOrderPlacedMessage() {
+    public String getConfirmationMessage() {
         return message.getText();
     }
 }
