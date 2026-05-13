@@ -1,49 +1,60 @@
 package com.sparta.steps;
 import com.sparta.pages.SubscriptionPage;
-import net.thucydides.core.annotations.Step;
-import net.thucydides.core.steps.ScenarioSteps;
+import io.cucumber.java.en.*;
 import org.junit.Assert;
 
-public class SubscriptionSteps extends ScenarioSteps {
+public class SubscriptionSteps {
 
     SubscriptionPage subscriptionPage;
 
-    @Step("Open Automation Exercise homepage")
-    public void open_homepage() {
+    @Given("user opens Automation Exercise homepage")
+    public void userOpenHomepage() {
         subscriptionPage.openHomePage();
     }
 
-    @Step("Scroll to footer")
-    public void scroll_to_footer() {
+    @When("user scrolls to footer")
+    public void userScrollFooter() {
         subscriptionPage.scrollToFooter();
     }
 
-    @Step("Enter email: {0}") //insert First method parameter -> show email
-    public void enter_email(String email) {
+    @When("user enters email {string}")
+    @When("user enters invalid email {string}")
+    @When("the visitor enters invalid email {string}")
+    public void userEnterEmail(String email) {
         subscriptionPage.enterEmail(email);
     }
 
-    @Step("Click subscribe button")
-    public void click_subscribe_button() {
+    @When("user clicks subscribe button")
+    public void userClickSubscribe() {
         subscriptionPage.clickSubscribe();
     }
 
-    @Step("Verify success message")
-    public void verify_success_message(String expectedMessage) {
-        Assert.assertEquals(expectedMessage, subscriptionPage.getSuccessMessage());
+    @Then("user should see subscription success message {string}")
+    public void userVerifyMessage(String msg) {
+        Assert.assertEquals(msg, subscriptionPage.getSuccessMessage());
     }
-// sad path: empty email
-    @Step("Leave email field empty")
-    public void empty_email_validation(){
-        Assert.assertTrue(subscriptionPage.isValidationEmailDisplayed());
-    }
-    @Step("Verify user is still on page, form could not be submitted")
-    public void verify_subscription_not_submitted(){
-        Assert.assertTrue(subscriptionPage.isStillOnPage());
-    }
-    @Step("Verify error message is displayed")
-    public void verify_error_message_displayed(){
+
+    @When("the visitor leaves the email field empty")
+    public void leaveEmailFieldEmpty(){
         Assert.assertTrue(subscriptionPage.isValidationEmailDisplayed());
     }
 
+    @Then("the form submission is prevented")
+    public void formNotSubmitted(){
+        Assert.assertTrue(subscriptionPage.isStillOnPage());
+    }
+
+    @And("a required field validation message is displayed")
+    public void validationMessageDisplays(){
+        Assert.assertTrue(subscriptionPage.isValidationEmailDisplayed());
+    }
+
+    @Given("a user has already subscribed with email {string}")
+    @When("the user subscribes again with email {string}")
+    public void alreadySubscribedWithEmail(String email) {
+        userOpenHomepage();
+        userScrollFooter();
+        userEnterEmail(email);
+        userClickSubscribe();
+    }
 }

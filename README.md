@@ -29,6 +29,16 @@ Key objectives:
   
 ---
 
+## Team
+
+| Name | Role | 
+|------|------|
+| Badria | Scrum Master | 
+| Roshanbi | Test Lead | 
+| Tam | Tester | 
+| Sharaf | Tester |
+| Ahmed | Tester | 
+
 ## System Under Test
 
 | | |

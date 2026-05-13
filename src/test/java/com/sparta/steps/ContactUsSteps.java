@@ -1,13 +1,11 @@
 package com.sparta.steps;
 
 import com.sparta.pages.ContactUsPage;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.*;
 import net.thucydides.core.annotations.ManagedPages;
-import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.pages.Pages;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class ContactUsSteps {
 
@@ -18,7 +16,6 @@ public class ContactUsSteps {
 
     @Given("user launches the application")
     public void userLaunchesTheApplication() {
-        contactUsPage = pages.get(ContactUsPage.class);
         contactUsPage.openHomePage();
         contactUsPage.acceptCookiesIfVisible();
     }
@@ -34,7 +31,7 @@ public class ContactUsSteps {
         contactUsPage.enterName(name);
     }
 
-    @And("user enters 1 email {string}")
+    @And("user enters a contact email {string}")
     public void userEntersEmail(String email1) {
         contactUsPage.enterEmail(email1);
     }
@@ -65,24 +62,23 @@ public class ContactUsSteps {
         assertThat(contactUsPage.getSuccessMessageText())
                 .contains("Success! Your details have been submitted successfully.");
     }
-// Sad path
-@And("user clicks submit button without accepting alert")
-public void userClicksSubmitButtonWithoutAcceptingAlert() {
-    contactUsPage.clickSubmitWithoutAcceptingAlert();
-}
+
+    // Sad paths:
+
+    @When("user clicks submit button without accepting alert")
+    public void userClicksSubmitButtonWithoutAcceptingAlert() {
+        contactUsPage.clickSubmitWithoutAcceptingAlert();
+    }
 
     @Then("the form should not be submitted")
     public void theFormShouldNotBeSubmitted() {
-        assertThat(contactUsPage.isFormNotSubmitted()).isTrue();
+        assertThat(contactUsPage.isSuccessMessageDisplayed())
+                .as("Success message should NOT be displayed")
+                .isFalse();
     }
 
     @And("the user should remain on the Contact Us page")
     public void theUserShouldRemainOnTheContactUsPage() {
         assertThat(contactUsPage.isStillOnContactUsPage()).isTrue();
-    }
-
-    @And("an email validation error should be displayed")
-    public void anEmailValidationErrorShouldBeDisplayed() {
-        assertThat(contactUsPage.isEmailValidationErrorDisplayed()).isTrue();
     }
 }
