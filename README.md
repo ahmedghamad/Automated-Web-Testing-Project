@@ -29,6 +29,16 @@ Key objectives:
   
 ---
 
+## Team
+
+| Name | Role | 
+|------|------|
+| Ahmed | Product Owner | 
+| Badria | Scrum Master | 
+| Roshanbi | Test Lead | 
+| Tam | Tester | 
+| Sharaf | Tester | 
+
 ## System Under Test
 
 | | |
