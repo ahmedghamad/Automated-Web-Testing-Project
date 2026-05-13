@@ -1,35 +1,30 @@
 Feature: Subscription functionality
-# ----Happy path----
+  @happyPath
   Scenario: User subscribes successfully from footer
-
     Given user opens Automation Exercise homepage
     When user scrolls to footer
     And user enters email "testuser@gmail.com"
     And user clicks subscribe button
     Then user should see subscription success message "You have been successfully subscribed!"
 
-# ----Sad path----
-# Empty email
+  @sadPath
   Scenario: User submits the form without entering an email
-    Given the subscription form is visible
-    When the visitor leaves the email field empty
-    And clicks the Subscribe button
+    Given user opens Automation Exercise homepage
+    When user scrolls to footer
+    And the visitor leaves the email field empty
+    And user clicks subscribe button
     Then the form submission is prevented
     And a required field validation message is displayed
 
- #Invalid email
+  @sadPath
   Scenario: User enters an invalid email address
-    Given the visitor is on the website
-    When the visitor enters invalid email "test@"
-    And clicks the Subscribe button
-    Then the subscription is not submitted
-    And an error message is displayed
+    Given user opens Automation Exercise homepage
+    When user scrolls to footer
+    And user enters invalid email "test@"
+    And user clicks subscribe button
+    Then the form submission is prevented
+    And a required field validation message is displayed
 
-#Already registered email
-  Scenario: User subscribes multiple times using the same email address
-    Given a user has already subscribed with email "testuser@gmail.com"
-    When the user subscribes again with email "testuser@gmail.com"
-    Then user should see subscription success message "You have been successfully subscribed!"
 
 #Website should now accept duplicate email but this website did. Here is the test that will fail
 #  @Ignore

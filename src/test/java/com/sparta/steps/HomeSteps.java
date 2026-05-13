@@ -56,7 +56,6 @@ public class HomeSteps {
         homePage.clickWomensCategory();
         Assertions.assertTrue(homePage.isWomenPanelVisible());
         homePage.clickDress();
-
     }
 
     @Then("the brands filter should be visible")
